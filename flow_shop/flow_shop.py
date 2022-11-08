@@ -124,23 +124,6 @@ def swap(array: np.ndarray, idx_1: int, idx_2: int) -> np.ndarray:
     return cp_array
 
 
-def reverse_subsequence(array: np.ndarray, idx_1: int, idx_2: int) -> np.ndarray:
-    """Reverse order in subsequence of array
-
-    Args:
-        array (np.ndarray): Array
-        idx_1 (int): Index of initial element
-        idx_2 (int): Index of closing element
-
-    Returns:
-        array (np.ndarray): Copy array with reverse order subsequence
-    """
-    cp_array = array.copy()
-    temp = cp_array[:, idx_1 : idx_2 + 1][:, ::-1]
-    cp_array[:, idx_1 : idx_2 + 1] = temp
-    return cp_array
-
-
 def insert_before(array: np.ndarray, idx_1: int, idx_2: int) -> np.ndarray:
     """Insert element from idx_1 before element idx_2
 
@@ -182,4 +165,21 @@ def insert_after(array: np.ndarray, idx_1: int, idx_2: int) -> np.ndarray:
         cp_array[:, idx_2 + 1 : idx_1 + 1] = cp_array[:, idx_2:idx_1]
         cp_array[:, idx_2 + 1] = tmp
 
+    return cp_array
+
+
+def reverse_subsequence(array: np.ndarray, idx_1: int, idx_2: int) -> np.ndarray:
+    """Reverse order in subsequence of array
+
+    Args:
+        array (np.ndarray): Array
+        idx_1 (int): Index of initial element
+        idx_2 (int): Index of closing element
+
+    Returns:
+        array (np.ndarray): Copy array with reverse order subsequence
+    """
+    cp_array = array.copy()
+    temp = cp_array[:, idx_1 : idx_2 + 1][:, ::-1]
+    cp_array[:, idx_1 : idx_2 + 1] = temp
     return cp_array
