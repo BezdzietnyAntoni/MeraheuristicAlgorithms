@@ -17,19 +17,6 @@ EPS = np.finfo(float).eps
 EPS2 = np.finfo(np.float32).eps
 
 
-def assign_temp_init(dt: float, p: float):
-    """Function appoint initial temperature for simulated annealing
-    Args:
-        dt (float): Standard length between solutions
-        p (float): Probability for first iteration (should be close to 1)
-    """
-    return -dt / np.log10(p)
-
-
-def probably(chance):
-    return random.random() < chance
-
-
 def roll_two_different_index(n_jobs):
     idx1 = random.randint(0, n_jobs - 1)
     idx2 = random.randint(0, n_jobs - 1)
@@ -55,7 +42,7 @@ def linear_slope(t0, tk, n):
 FALL_FUNCTIONS = {0: geometric_slope, 1: logarithmic_slope, 2: linear_slope}
 
 
-def simulated_annealing(
+def threshold_algorithm(
     data: np.ndarray,
     move_type: NeighborMoves,
     slope_type: SlopeType,
@@ -77,6 +64,13 @@ def simulated_annealing(
     x_curr = x_best.copy()
     t_curr = fs.calculate_completion_time(x_curr, data.shape[1], data.shape[0])
 
+    #TODO 
+    iter_no_change = 0
+    env_without_change = 10
+    pulse = 0.2*temp_init
+
+
+
     # Save history
     if return_hist:
         t_hist = np.zeros((max_iter, 3))
@@ -91,8 +85,7 @@ def simulated_annealing(
             x_prime, x_prime.shape[1], x_prime.shape[0]
         )
 
-        probability = np.min([1, np.exp(-((t_prime - t_curr) + EPS) / (temp_k + EPS))])
-        if probably(probability):
+        if (t_prime - t_curr) < temp_k:
             x_curr = x_prime.copy()
             t_curr = t_prime
 
@@ -100,8 +93,16 @@ def simulated_annealing(
             t_best = t_prime
             x_best = x_prime.copy()
 
-        temp_k = slope_function(temp_init, temp_k, max_iter)
+        temp_k = slope_function(temp_init, temp_k, max_iter)+1
 
+        #TODO 
+        if t_best == t_prime:
+            iter_no_change += 1
+        else:
+            if iter_no_change >= env_without_change:
+                temp_k += pulse
+                iter_no_change = 0
+        
         if return_hist:
             t_hist[k, 0] = t_best
             t_hist[k, 1] = t_curr
