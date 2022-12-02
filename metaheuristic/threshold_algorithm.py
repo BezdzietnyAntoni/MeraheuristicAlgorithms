@@ -4,7 +4,8 @@ from enum import IntEnum
 import numpy as np
 
 import flow_shop as fs
-from neighbor_moves import *
+
+from .neighbor_moves import *
 
 
 class SlopeType(IntEnum):
@@ -64,12 +65,10 @@ def threshold_algorithm(
     x_curr = x_best.copy()
     t_curr = fs.calculate_completion_time(x_curr, data.shape[1], data.shape[0])
 
-    #TODO 
+    # TODO
     iter_no_change = 0
     env_without_change = 10
-    pulse = 0.2*temp_init
-
-
+    pulse = 0.2 * temp_init
 
     # Save history
     if return_hist:
@@ -93,22 +92,20 @@ def threshold_algorithm(
             t_best = t_prime
             x_best = x_prime.copy()
 
-        temp_k = slope_function(temp_init, temp_k, max_iter)+1
+        temp_k = slope_function(temp_init, temp_k, max_iter) + 1
 
-        #TODO 
+        # TODO
         if t_best == t_prime:
             iter_no_change += 1
         else:
             if iter_no_change >= env_without_change:
                 temp_k += pulse
                 iter_no_change = 0
-        
+
         if return_hist:
             t_hist[k, 0] = t_best
             t_hist[k, 1] = t_curr
             t_hist[k, 2] = temp_k
-
-        
 
     if not return_hist:
         return (t_best, x_best)

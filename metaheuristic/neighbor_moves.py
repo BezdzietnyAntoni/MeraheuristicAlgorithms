@@ -18,3 +18,5 @@ TRANSFORMS = {
     2: fs.insert_before,
     3: fs.insert_after,
 }
+
+TRANSFORMS_NAME = ["SWAP", "Reverse Subsequence", "Insert Before", "Insert After"]

@@ -4,7 +4,8 @@ from enum import IntEnum
 import numpy as np
 
 import flow_shop as fs
-from neighbor_moves import *
+
+from .neighbor_moves import *
 
 
 class SlopeType(IntEnum):
@@ -106,8 +107,6 @@ def simulated_annealing(
             t_hist[k, 0] = t_best
             t_hist[k, 1] = t_curr
             t_hist[k, 2] = temp_k
-
-        
 
     if not return_hist:
         return (t_best, x_best)

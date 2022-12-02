@@ -3,7 +3,8 @@ import random
 import numpy as np
 
 import flow_shop as fs
-from neighbor_moves import *
+
+from .neighbor_moves import *
 
 
 def tabu_search(
