@@ -3,12 +3,17 @@
 ## Implemented algorithms
 
 1. Tabu Search
+2. Simulated Annealing
+3. Threshold Algorithm
+4. Reduced Variable Neighborhood Search
 
 ---
+## Problems
 
-## Benchmark Database
+- Flow Shop Problem
+  -  Benchmark Database: OR-Library *J.E. Beasley* <http://people.brunel.ac.uk/~mastjjb/jeb/orlib/flowshopinfo.html>
 
-OR-Library *J.E. Beasley* <http://people.brunel.ac.uk/~mastjjb/jeb/orlib/flowshopinfo.html>
+- Fit filter coefficients (continuos problem)
 
 ---
 
