@@ -105,7 +105,7 @@ def simulated_annealing(
 
         if return_hist:
             t_hist[k, 0] = t_best
-            t_hist[k, 1] = t_curr
+            t_hist[k, 1] = t_prime
             t_hist[k, 2] = temp_k
 
     if not return_hist:
