@@ -63,6 +63,7 @@ def simulated_annealing(
     temp_init: int = 1000,
     max_iter: int = 1000,
     return_hist=False,
+    pulse_temp=False,
 ):
     n_jobs = data.shape[1]
     temp_k = temp_init
@@ -82,6 +83,12 @@ def simulated_annealing(
     if return_hist:
         t_hist = np.zeros((max_iter, 3))
 
+    # For pulse slope function
+    pulse_value = 0.5 * temp_init
+    t_best_prime = t_best
+    max_val_no_change = np.min([int(max_iter * 0.10), 100])
+    counter_no_change = 0 
+
     for k in range(max_iter):
         indexes = roll_two_different_index(n_jobs)
         if move_type in [NeighborMoves.SWAP, NeighborMoves.REVERSE_SUBSEQUENCE]:
@@ -100,6 +107,19 @@ def simulated_annealing(
         if t_prime < t_best:
             t_best = t_prime
             x_best = x_prime.copy()
+
+
+        if pulse_temp:
+            # Add pulse do temp function
+            if t_best_prime == t_best:
+                counter_no_change += 1
+                if counter_no_change >= max_val_no_change:
+                    temp_k += pulse_value
+                    counter_no_change = 0
+                    max_val_no_change *= 2
+            else:
+                t_best_prime = t_best
+                counter_no_change = 0
 
         temp_k = slope_function(temp_init, temp_k, max_iter)
 
