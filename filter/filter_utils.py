@@ -35,7 +35,7 @@ def cost_LP_filter(
     cost += np.sum(np.where(d_sqr > d1**2, np.sqrt(d_sqr), 0))
 
     # Stopband section (in linear best = 0)
-    const_penalty = 10
+    const_penalty = -np.log10(d2)*10
     d = f_response[n_transition:] - d2
     cost += np.sum(np.where(d > 0.0, const_penalty * d, 0))
 

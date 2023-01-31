@@ -26,18 +26,18 @@ def roll_two_different_index(n_jobs):
     return [idx1, idx2]
 
 
-def geometric_slope(t0, tk, n):
+def geometric_slope(t0, tk, n, k):
     lmb = (EPS / t0) ** (1 / n)
     return lmb * tk
 
 
-def logarithmic_slope(t0, tk, n):
-    lmb = (t0 - EPS) / (n * t0 * EPS)
+def logarithmic_slope(t0, tk, n, k):
+    lmb = t0 / (n * t0 + EPS)
     return tk / (1 + lmb * tk)
 
 
-def linear_slope(t0, tk, n):
-    return t0 / n
+def linear_slope(t0, tk, n, k):
+    return t0 / k
 
 
 FALL_FUNCTIONS = {0: geometric_slope, 1: logarithmic_slope, 2: linear_slope}
@@ -106,7 +106,7 @@ def threshold_algorithm(
                 t_best_prime = t_best
                 counter_no_change = 0
 
-        temp_k = slope_function(temp_init, temp_k, max_iter)
+        temp_k = slope_function(temp_init, temp_k, max_iter, k)
 
         if return_hist:
             t_hist[k, 0] = t_best

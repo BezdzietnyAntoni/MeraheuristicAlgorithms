@@ -33,7 +33,7 @@ def tabu_search(
     tabu_list = np.zeros((tabu_size, 2), dtype=int)
 
     if return_hist:
-        t_hist = np.zeros(max_iter)
+        t_hist = np.zeros((max_iter,2))
 
     for k in range(max_iter):
         # Generate neighbor
@@ -86,7 +86,8 @@ def tabu_search(
         tabu_idx = (tabu_idx + 1) % tabu_size
 
         if return_hist:
-            t_hist[k] = t_best
+            t_hist[k, 0] = t_best
+            t_hist[k, 1] = neighbor_times[best_neighbor_idx]
 
     if not return_hist:
         return (t_best, x_best)

@@ -98,7 +98,7 @@ def display_graph(
                     edgecolor="k",
                 )
             )
-    plt.title("Flow Shop Problem - Result")
+    plt.title("Flow Shop Problem")
     plt.xlabel("Time")
     plt.ylabel("Machines")
     plt.yticks(range(1, data_frame.m_machines + 1))
